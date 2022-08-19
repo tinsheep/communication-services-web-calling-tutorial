@@ -76,11 +76,13 @@ export default class CallCard extends React.Component {
 
             this.recognizerForInput.recognized = (s, e) => {
                 console.warn('recongnized', e);
+                console.warn('Translated:', e.result.translations.get("es-ES"));
             };
 
             this.recognizerForInput.recognizing = (s, e) => {
                 console.warn('recongnized', e);
-            };
+                console.warn('Translated:', e.result.translations.get("es-ES"));
+             };
 
             this.recognizerForInput.canceled = (s, e) => {
                 console.warn("Session canceled", s, e);
@@ -154,6 +156,9 @@ export default class CallCard extends React.Component {
 
             if (e.result.audio && soundContext) {
                 console.warn(soundContext);
+                //CAN I GET THE TEXT VERSION OF TRANSLATION?
+                console.info(e.result.toString);
+                
                 var source = soundContext.createBufferSource();
 
                 console.warn(source);

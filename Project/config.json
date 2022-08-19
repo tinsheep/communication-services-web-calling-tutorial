@@ -1,7 +1,7 @@
 {
-    "connectionString": "REPLACE_WITH_CONNECTION_STRING",
-    "cognitiveServiceSpeechKey": "REPLACE_WITH_COGNITIVE_SPEECH_KEY",
-    "cognitiveServicesRegion": "REPLACE_WITH_COGNITIVE_SPEECH_REGION"
+    "connectionString": "endpoint=https://mycommunications.communication.azure.com/;accesskey=LwoHYd5nKMVb1/CBIgj5g2lv8ib1G3UvzMLwavPFdg2060Y/hEDpWGtkvXFGQm4MekWteCN0vW+MOXQYITUP2g==",
+    "cognitiveServiceSpeechKey": "ee7f9946f2754dbdadd324e00d5d8aa7",
+    "cognitiveServicesRegion": "westus2"
 }
 
 

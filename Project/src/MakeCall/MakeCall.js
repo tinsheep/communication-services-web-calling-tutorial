@@ -950,6 +950,48 @@ this.deviceManager.on('selectedSpeakerChanged', () => { console.log(this.deviceM
                 <div className="card">
                     <div className="ms-Grid">
                         <div className="ms-Grid-row">
+                            <h2 className="ms-Grid-col ms-lg6 ms-sm6 mb-4">Speaker translation to Text</h2>
+                            <div className="ms-Grid-col ms-lg6 ms-sm6 text-right">
+                                <PrimaryButton
+                                    className="primary-button"
+                                    iconProps={{ iconName: 'Video', style: { verticalAlign: 'middle', fontSize: 'large' } }}
+                                    text={`${this.state.showTranslationSampleCode ? 'Hide' : 'Show'} code`}
+                                    onClick={() => this.setState({ showTranslationSampleCode: !this.state.showTranslationSampleCode })}>
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                        {
+                            this.state.showTranslationSampleCode &&
+                            <pre>
+                                <code style={{ color: '#b3b0ad' }}>
+                                    {translationSampleCode}
+                                </code>
+                            </pre>
+                        }
+                        <div>
+                            Speaker translation and Microphone translation have similar output but using different translation way.
+                        </div>
+                        <br></br>
+                        <h3>
+                            Speaker translation - try it out.
+                        </h3>
+                        <div>
+                            After you start your call, choose the source language from Speak dropdown menu, and then choose the target language from BroadCast dropdown menu.
+                            You will hear the translated audio on your side.
+                        </div>
+                        <br></br>
+                        <h3>
+                            Microphone translation - try it out.
+                        </h3>
+                        <div>
+                            After you start your call, choose the source language from Speak dropdown menu, and then choose the target language from Listen dropdown menu.
+                            You will hear the translated audio on your side.
+                        </div>
+                    </div>
+                </div>                
+                <div className="card">
+                    <div className="ms-Grid">
+                        <div className="ms-Grid-row">
                             <h2 className="ms-Grid-col ms-lg6 ms-sm6 mb-4">Video, Screen sharing, and local video preview</h2>
                             <div className="ms-Grid-col ms-lg6 ms-sm6 text-right">
                                 <PrimaryButton
