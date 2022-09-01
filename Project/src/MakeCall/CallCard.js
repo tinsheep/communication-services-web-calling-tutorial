@@ -52,6 +52,7 @@ export default class CallCard extends React.Component {
             spokenLanguage: 'en-us',
             selectedMicrophoneTranslationOption: 'None',
             selectedSpeakerTranslationOption: 'None',
+            selectedCaptionTranslationOption: 'None',
             microphoneDeviceOptions: props.microphoneDeviceOptions ? props.microphoneDeviceOptions : [],
             selectedCameraDeviceId: props.selectedCameraDeviceId,
             selectedSpeakerDeviceId: this.deviceManager.selectedSpeaker?.id,
@@ -215,6 +216,29 @@ export default class CallCard extends React.Component {
         }
 
     }
+
+    //method to start teams caption translation
+    startTeamsCaption(configObj) {
+        if (configObj.key !== 'None') {
+            alert('startTeamsCaptions');
+            // Start the teams captions feature for acs
+            const teamsCaptions = this.call.feature(Features.TeamsCaptions);
+            // Will fire once live captions are turned on from the teams meeting side
+            // and users in the call start speaking
+            teamsCaptions.on('captionsReceived', (data) =>{
+                if (data.resultType == 1) {
+                    console.log(`Transcription Received:`);
+                    console.log(`    Speaker: ${data.speaker.identifier.communicationUserId}`);
+                    console.log(`    TimeStamp: ${data.timestamp}`);
+                    console.log(`    Text: ${data.text}`);
+                    console.log(`    ResultType: ${data.resultType}`);
+                    console.log(`    Language: ${data.language}`);
+                }
+            });
+        }   
+    }
+
+
 
     async translateCaptions() {
         //console.warn(this.call._tsCall.setInputAudioStreamTrack);
@@ -685,6 +709,13 @@ export default class CallCard extends React.Component {
         this.setState({ selectedMicrophoneTranslationOption: configObj.key });
     };
 
+    // Caption Translation
+    captionTranslationSettingsChanged = async (event) => {
+        let configObj = JSON.parse(event.target.value);
+        this.setState({ selectedCaptionTranslationOption: configObj.key });
+        this.startTeamsCaption(configObj);
+    };
+
     speakerTranslationSettingsChanged = async (event) => {
         let configObj = JSON.parse(event.target.value);
         this.configureTranslation(configObj, true);
@@ -740,7 +771,7 @@ export default class CallCard extends React.Component {
                         this.state.callState === 'Connected' &&
                         <div className="ms-Grid-col ms-sm12 ms-lg12">
                             <div class="ms-Grid-row participants-panel mt-1 mb-3">                           
-                                <div class="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+                                <div class="ms-Grid-col ms-sm6 ms-md6 ms-lg4">
                                     <Persona className={this.state.isSpeaking ? `speaking-border-for-initials` : ``}
                                         size={PersonaSize.size40}
                                         text={ this.state.displayName ? this.state.displayName : 'Local Participant' }
@@ -776,7 +807,17 @@ export default class CallCard extends React.Component {
                                                 )}
                                             </select>                                            
                                         </div>
-                                    </div>                             
+                                    </div>
+                                    <div class="ms-Grid-col ms-sm2 ms-md2 ms-lg2">                                  
+                                        <div class="select-group">
+                                            <label>Caption</label>                              
+                                            <select class="select" onChange={this.captionTranslationSettingsChanged}>
+                                                {this.state.translationOptions.map((eachLanguageOption,index) => (
+                                                    <option key={eachLanguageOption.key} name={eachLanguageOption.voiceName} value={JSON.stringify(eachLanguageOption)}>{eachLanguageOption.text}</option>)
+                                                )}
+                                            </select>                                            
+                                        </div>
+                                    </div>                                   
                             </div>
                         </div>
                     }  
